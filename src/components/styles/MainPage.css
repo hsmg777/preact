@@ -1,6 +1,5 @@
 /* MainPage.css */
 .main-page {
-
   height: 100vh; /* Ajuste para ocupar el 100% de la vista */
   display: flex;
   flex-direction: column; /* Para alinear en columna */

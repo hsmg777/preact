@@ -16,7 +16,7 @@ const MainPage = () => {
                     <h4>Ingrese su contraseña</h4>
                     <input type='password'></input>
                     <button type="submit" className='reservar-button'>Acceder</button>
-                    <p>No tienes tu usuario? <Link to="/register">Registrate</Link> </p> {/* Usando Link */}
+                    <p>No tienes tu usuario? <Link to="/registrar">Registrate</Link> </p> {/* Usando Link */}
                 </div>
             </div>
         </div>
