@@ -28,8 +28,11 @@ const MainPage = () => {
                 );
 
                 if (usuarioValido) {
-                    // Si el usuario es válido, redirigir a /menu
-                    history.push('/menu');
+                    alert('Ingreso exitoso, bienvenido ');
+                    history.push({
+                      pathname: '/Menu',
+                      state: { logged: true }
+                    });
                 } else {
                     // Si no es válido, mostrar mensaje de error
                     setMensaje('Usuario o contraseña incorrectos. Por favor, revise sus credenciales.');
