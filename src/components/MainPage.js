@@ -5,45 +5,40 @@ import '../components/styles/MainPage.css';
 const MainPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [mensaje, setMensaje] = useState(''); // Estado para el mensaje de error
-    const history = useHistory(); // Hook para redireccionar
+    const [mensaje, setMensaje] = useState(''); 
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        const UserPsw = {
+            username: username,
+            contrasenia: password  
+        };
+
         try {
-            const response = await fetch('/api/usuario', {
-                method: 'GET',
+            const response = await fetch('/api/usuario/validate', {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(UserPsw)
             });
 
-            if (response.ok) {
-                const usuarios = await response.json();
+            const data = await response.json();
 
-                // Buscar si el username y la contraseña coinciden
-                const usuarioValido = usuarios.find(user => 
-                    user.Username === username && user.Contrasenia === password
-                );
-
-                if (usuarioValido) {
-                    alert('Ingreso exitoso, bienvenido ');
-                    history.push({
-                      pathname: '/Menu',
-                      state: { logged: true }
-                    });
-                } else {
-                    // Si no es válido, mostrar mensaje de error
-                    setMensaje('Usuario o contraseña incorrectos. Por favor, revise sus credenciales.');
-                }
+            if (response.status === 200 && data.valid) {
+                alert('Bienvenido, acceso correcto');
+                history.push({
+                    pathname: '/Menu',
+                    state: { logged: true }
+                  });
             } else {
-                setMensaje('Error al conectar con el servidor. Intente nuevamente.');
+                setMensaje('Usuario o contraseña incorrectos, revise sus credenciales');
             }
         } catch (error) {
-            setMensaje('Error de comunicación con el servidor.');
+            setMensaje('Hubo un error al comunicarse con el servidor');
         }
-    };
+    }
 
     return (
         <div className='main-page'>
