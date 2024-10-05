@@ -1,0 +1,107 @@
+.menu-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+
+.cabeceraMenu {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cabeceraMenu h1, .cabeceraMenu h3 {
+    margin: 10px;
+    color: black;
+}
+
+.cuadro {
+    width: 80%;
+    max-width: 1000px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.busqueda-barra {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.busqueda-barra input {
+    padding: 10px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.busqueda-barra button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.busqueda-barra button:hover {
+    background-color: #0056b3;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.tabla-usuarios th, .tabla-usuarios td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-usuarios th {
+    background-color: #007bff;
+    color: white;
+}
+
+.tabla-usuarios input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.tabla-usuarios button {
+    padding: 8px 12px;
+    margin: 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabla-usuarios button:hover {
+    background-color: #218838;
+}
+
+.tabla-usuarios button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+.tabla-usuarios button:nth-child(2):hover {
+    background-color: #c82333;
+}
+
+.mensaje {
+    margin-top: 20px;
+    color: green;
+    font-size: 1rem;
+}

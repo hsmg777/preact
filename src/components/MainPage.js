@@ -6,6 +6,7 @@ const MainPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [mensaje, setMensaje] = useState(''); 
+    const history = useHistory();
 
     const handleLogin = async (e) => {
         e.preventDefault();
