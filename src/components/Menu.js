@@ -40,26 +40,29 @@ const Menu = () => {
         }
     };
 
-    // Actualizar usuario
-    const actualizarUsuario = async (id_User) => {
-        const usuario = usuarios.find((u) => u.id_User === id_User);
+    //Actualizar Usuario
+    const actualizarUsuario = async (id_User, data) => {
         try {
-            const response = await fetch(`/api/usuario/${id_User}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(usuario),
-            });
-            if (response.ok) {
-                setMensaje("Usuario actualizado con éxito.");
-                listarUsuarios();
-            } else {
-                setMensaje("Error al actualizar usuario.");
-            }
+          const response = await fetch(`http://localhost:3000/api/usuario/${id_User}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+      
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error al actualizar el usuario:', errorData);
+          } else {
+            alert("Usuario actualizado con exito")
+            console.log('Usuario actualizado con éxito');
+          }
         } catch (error) {
-            console.error("Error al actualizar usuario", error);
-            setMensaje("Error al actualizar usuario.");
+          console.error('Error en la solicitud PUT:', error);
         }
-    };
+      };
+      
 
     // Eliminar usuario
     const eliminarUsuario = async (id_User) => {
@@ -168,9 +171,18 @@ const Menu = () => {
                                     />
                                 </td>
                                 <td>
-                                    <button onClick={() => actualizarUsuario(usuario.id_User)}>
-                                        Actualizar
-                                    </button>
+                                <button
+                                    onClick={() => actualizarUsuario(usuario.id_User, {
+                                        Username: usuario.Username,
+                                        Contrasenia: usuario.Contrasenia,
+                                        Nombre: usuario.Nombre,
+                                        Apellido: usuario.Apellido,
+                                        Cedula: usuario.Cedula,
+                                        Telefono: usuario.Telefono,
+                                    })}
+                                >
+                                    Actualizar
+                                </button>
                                     <button onClick={() => eliminarUsuario(usuario.id_User)}>
                                         Eliminar
                                     </button>
