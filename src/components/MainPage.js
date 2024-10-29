@@ -27,13 +27,19 @@ const MainPage = () => {
 
             const data = await response.json();
 
-            if (response.status === 200 && data.valid) {
-                alert('Bienvenido, acceso correcto');
+            if (response.status === 200 && data.valid  && data.isAdmin == "Y") {
+                alert('Bienvenido admin, acceso correcto');
                 history.push({
                     pathname: '/Menu',
                     state: { logged: true }
                   });
-            } else {
+            } else if (response.status === 200 && data.valid  && data.isAdmin == "N"){
+                alert('Bienvenido usuario, acceso correcto');
+                history.push({
+                    pathname: '/menuUser',
+                    state: { logged: true }
+                  });
+            }else{
                 setMensaje('Usuario o contraseña incorrectos, revise sus credenciales');
             }
         } catch (error) {
@@ -65,7 +71,7 @@ const MainPage = () => {
                     />
                     <button type="submit" className='reservar-button'>Acceder</button>
                     {mensaje && <p style={{ color: 'red' }}>{mensaje}</p>}
-                    <p>No tienes tu usuario? <Link to="/registrar">Regístrate</Link> </p> 
+                    
                 </form>
             </div>
         </div>

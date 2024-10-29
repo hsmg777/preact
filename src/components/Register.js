@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, useHistory } from 'react-router-dom'; 
 import './styles/Register.css'
 
 const Register = () => {
@@ -9,8 +9,16 @@ const Register = () => {
     const [apellido, setApellido] = useState('');
     const [cedula, setCedula] = useState('');
     const [telefono, setTelefono] = useState('');
+    const [isAdminis, setAdmin] = useState('');
     const [mensaje, setMensaje] = useState('');
+    const history = useHistory();
 
+    const volver = async () =>{
+        history.push({
+            pathname: '/Menu',
+            state: { logged: true }
+          });
+    };
     const handleRegister = async (e) => {
         e.preventDefault(); 
 
@@ -21,6 +29,7 @@ const Register = () => {
             Apellido: apellido,
             Cedula: cedula,
             Telefono: telefono,
+            isAdmin: isAdminis
         };
 
         try {
@@ -94,9 +103,21 @@ const Register = () => {
                         onChange={(e) => setTelefono(e.target.value)} 
                         required 
                     />
+                    <p>es Admin? (Y/N): </p>
+
+                    
+                    <input 
+                        type='text' 
+                        value={isAdminis} 
+                        onChange={(e) => setAdmin(e.target.value)} 
+                        required 
+                    />
+                    
+
                     <button type="submit" className='reservar-button'>Crear</button>
                     <p>{mensaje}</p>
-                    <p>¿Tienes tu usuario? <Link to="/">Ingresa</Link></p>
+                    <button className='reservar-button' onClick={volver}>Regresar</button>
+                    
                 </form>
             </div>
         </div>
