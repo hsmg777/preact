@@ -8,6 +8,9 @@ const MainPage = () => {
     const [mensaje, setMensaje] = useState(''); 
     const history = useHistory();
 
+    // URL base de la API expuesta por Ngrok
+    const BASE_URL = "https://66b0-45-188-56-53.ngrok-free.app/api/usuario";
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -17,7 +20,7 @@ const MainPage = () => {
         };
 
         try {
-            const response = await fetch('/api/usuario/validate', {
+            const response = await fetch(`${BASE_URL}/validate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,19 +30,19 @@ const MainPage = () => {
 
             const data = await response.json();
 
-            if (response.status === 200 && data.valid  && data.isAdmin == "Y") {
+            if (response.status === 200 && data.valid && data.isAdmin === "Y") {
                 alert('Bienvenido admin, acceso correcto');
                 history.push({
                     pathname: '/Menu',
                     state: { logged: true }
-                  });
-            } else if (response.status === 200 && data.valid  && data.isAdmin == "N"){
+                });
+            } else if (response.status === 200 && data.valid && data.isAdmin === "N") {
                 alert('Bienvenido usuario, acceso correcto');
                 history.push({
                     pathname: '/menuUser',
                     state: { logged: true }
-                  });
-            }else{
+                });
+            } else {
                 setMensaje('Usuario o contraseña incorrectos, revise sus credenciales');
             }
         } catch (error) {

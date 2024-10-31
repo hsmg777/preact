@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'; 
-import './styles/Register.css'
+import './styles/Register.css';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -13,12 +13,16 @@ const Register = () => {
     const [mensaje, setMensaje] = useState('');
     const history = useHistory();
 
-    const volver = async () =>{
+    // URL base de la API expuesta por Ngrok
+    const BASE_URL = "https://66b0-45-188-56-53.ngrok-free.app/api/usuario";
+
+    const volver = async () => {
         history.push({
             pathname: '/Menu',
             state: { logged: true }
-          });
+        });
     };
+
     const handleRegister = async (e) => {
         e.preventDefault(); 
 
@@ -33,7 +37,7 @@ const Register = () => {
         };
 
         try {
-            const response = await fetch('/api/usuario/', {
+            const response = await fetch(`${BASE_URL}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +72,7 @@ const Register = () => {
                         onChange={(e) => setUsername(e.target.value)} 
                         required 
                     />
-                    <p>Constraseña:</p>
+                    <p>Contraseña:</p>
                     <input 
                         type='password' 
                         value={contrasenia} 
@@ -89,39 +93,35 @@ const Register = () => {
                         onChange={(e) => setApellido(e.target.value)} 
                         required 
                     />
-                    <p>Cedula :</p>
+                    <p>Cédula :</p>
                     <input 
                         type='text' 
                         value={cedula} 
                         onChange={(e) => setCedula(e.target.value)} 
                         required 
                     />
-                    <p>Telefono :</p>
+                    <p>Teléfono :</p>
                     <input 
                         type='text' 
                         value={telefono} 
                         onChange={(e) => setTelefono(e.target.value)} 
                         required 
                     />
-                    <p>es Admin? (Y/N): </p>
-
-                    
+                    <p>¿Es Admin? (Y/N):</p>
                     <input 
                         type='text' 
                         value={isAdminis} 
                         onChange={(e) => setAdmin(e.target.value)} 
                         required 
                     />
-                    
 
                     <button type="submit" className='reservar-button'>Crear</button>
                     <p>{mensaje}</p>
                     <button className='reservar-button' onClick={volver}>Regresar</button>
-                    
                 </form>
             </div>
         </div>
     );
-}
+};
 
 export default Register;

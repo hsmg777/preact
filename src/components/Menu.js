@@ -8,9 +8,12 @@ const Menu = () => {
     const [mensaje, setMensaje] = useState("");
     const history = useHistory();
 
+    // URL base de la API expuesta por Ngrok
+    const BASE_URL = "https://66b0-45-188-56-53.ngrok-free.app/api/usuario";
+
     const listarUsuarios = async () => {
         try {
-            const response = await fetch("/api/usuario/");
+            const response = await fetch(`${BASE_URL}/`);
             const data = await response.json();
             setUsuarios(data);
             setMensaje("");
@@ -26,7 +29,7 @@ const Menu = () => {
     const buscarUsuarioPorId = async () => {
         console.log("Buscando usuario con ID:", idUsuario); 
         try {
-            const response = await fetch(`/api/usuario/${idUsuario}`);
+            const response = await fetch(`${BASE_URL}/${idUsuario}`);
             if (response.ok) {
                 const data = await response.json();
                 setUsuarios([data]);
@@ -49,9 +52,9 @@ const Menu = () => {
     };
 
     const actualizarUsuario = async (id_User, data) => {
-        console.log("Actualizando usuario con ID:", id_User, "Datos:", data); // Debug
+        console.log("Actualizando usuario con ID:", id_User, "Datos:", data);
         try {
-            const response = await fetch(`/api/usuario/${id_User}`, {
+            const response = await fetch(`${BASE_URL}/${id_User}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +64,7 @@ const Menu = () => {
 
             if (response.ok) {
                 alert("Usuario actualizado con éxito");
-                listarUsuarios(); // Refresh the list after update
+                listarUsuarios(); // Refresca la lista después de actualizar
             } else {
                 const errorData = await response.json();
                 console.error('Error al actualizar el usuario:', errorData);
@@ -74,13 +77,13 @@ const Menu = () => {
     };
 
     const eliminarUsuario = async (id_User) => {
-        console.log("Eliminando usuario con ID:", id_User); // Debug
+        console.log("Eliminando usuario con ID:", id_User);
         if (!id_User) {
             console.error("ID de usuario no proporcionado");
-            return; // Salir si no se proporciona un ID
+            return;
         }
         try {
-            const response = await fetch(`/api/usuario/${id_User}`, {
+            const response = await fetch(`${BASE_URL}/${id_User}`, {
                 method: "DELETE",
             });
             if (response.ok) {
