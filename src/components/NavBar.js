@@ -1,27 +1,61 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import './styles/NavBar.css';
 
-const Navbar = () => {
+const Navbar = ({ logged }) => {
   const location = useLocation();
+  const history = useHistory();
+
+  const handleMenu = () => {
+    history.push({
+        pathname: '/Menu',
+        state: { logged: true }
+      });
+  };
+  const handleOrders = () => {
+    history.push({
+        pathname: '/historialOrdenes',
+        state: { logged: true }
+      });
+  };
+  const handleHoras = () => {
+    history.push({
+        pathname: '/historialHoras',
+        state: { logged: true }
+      });
+  };
+  const handlePlatos= () => {
+    history.push({
+        pathname: '/gestionarPlatos',
+        state: { logged: true }
+      });
+  };
+  const handleSalir= () => {
+    history.push({
+        pathname: '/',
+        state: { logged: false}
+      });
+  };
+  
+  
 
   return (
     <nav className="navbar">
-      <Link to="/Menu" className={location.pathname === '/Menu' ? 'active' : ''}>
+      <button onClick={() => handleMenu()} className={location.pathname === '/Menu' ? 'active' : ''}>
         Gestionar Usuarios
-      </Link>
-      <Link to="/historialOrdenes" className={location.pathname === '/historialOrdenes' ? 'active' : ''}>
+      </button>
+      <button onClick={() => handleOrders("/historialOrdenes")} className={location.pathname === '/historialOrdenes' ? 'active' : ''}>
         Historial Ordenes
-      </Link>
-      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+      </button>
+      <button onClick={() => handleHoras("/historiaHoras")} className={location.pathname === '/historiaHoras' ? 'active' : ''}>
         Historia horas laborales
-      </Link>
-      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+      </button>
+      <button onClick={() => handlePlatos("/gestionarPlatos")} className={location.pathname === '/gestionarPlatos' ? 'active' : ''}>
         Gestionar platos
-      </Link>
-      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+      </button>
+      <button onClick={() => handleSalir("/salir")} className={location.pathname === '/salir' ? 'active' : ''}>
         Salir
-      </Link>
+      </button>
     </nav>
   );
 };

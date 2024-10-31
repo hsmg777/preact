@@ -1,0 +1,62 @@
+/* HistorialOrdenes.css */
+
+.mainHistorial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px; /* Espacio para el navbar fijo */
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title h1 {
+    margin: 10px;
+    color: black;
+}
+
+.table-view-order {
+    width: 80%;
+    max-width: 1000px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.tabla-ordenes {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.tabla-ordenes th, .tabla-ordenes td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-ordenes th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-ordenes td {
+    color: black;
+}
+
+.tabla-ordenes tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternado para filas */
+}
+
+.error-message {
+    color: red;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 20px;
+}

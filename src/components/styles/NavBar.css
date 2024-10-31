@@ -1,27 +1,32 @@
-
+/* NavBar.css */
 .navbar {
     display: flex;
-    background-color: #f2f2f2;
-    padding: 10px;
     justify-content: space-around;
-    font-family: Arial, sans-serif;
+    align-items: center;
+    background-color: #f2f2f2; /* Color de fondo gris claro */
+    padding: 10px;
     border-bottom: 2px solid #ccc;
+    font-family: Arial, sans-serif;
   }
   
-  .navbar a {
+  .navbar button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
     color: #333;
     text-decoration: none;
-    padding: 10px 15px;
+    cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
   }
   
-  .navbar a:hover {
-    background-color: #d9d9d9;
+  .navbar button:hover {
+    background-color: #d9d9d9; /* Color de fondo cuando se pasa el mouse */
   }
   
-  .navbar a.active {
-    background-color: #1a3d5c; /* Azul marino opaco */
+  .navbar button.active {
+    background-color: #1a3d5c; /* Azul marino opaco para el botón activo */
     color: #fff;
     font-weight: bold;
   }
