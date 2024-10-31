@@ -9,7 +9,7 @@ const Menu = () => {
     const history = useHistory();
 
     // URL base de la API expuesta por Ngrok
-    const BASE_URL = "https://f523-2800-bf0-165-1282-999a-18a5-6b53-69a3.ngrok-free.app/api/usuario";
+    const BASE_URL = "https://a0c8-2800-bf0-165-1282-999a-18a5-6b53-69a3.ngrok-free.app/api/usuario";
 
     const listarUsuarios = async () => {
         try {
