@@ -156,6 +156,7 @@ const Menu = () => {
                             <th>Apellido</th>
                             <th>Teléfono</th>
                             <th>Cédula</th>
+                            <th>is Admin?</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
