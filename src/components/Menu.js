@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import './styles/Menu.css';
+import Navbar from './NavBar';
 
 const Menu = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -129,6 +130,7 @@ const Menu = () => {
 
     return (
         <div className="menu-page">
+            <Navbar/>
             <div className="cabeceraMenu">
                 <h1>BIENVENIDO ADMINISTRADOR</h1>
                 <h3>CRUD USUARIOS</h3>

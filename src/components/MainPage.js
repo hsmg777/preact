@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'; 
 import '../components/styles/MainPage.css';
 
+
 const MainPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -51,8 +52,8 @@ const MainPage = () => {
     }
 
     return (
-        <NavBar>
         <div className='main-page'>
+            
             <div className='encabezado'>
                 <h1>PROYECTO CRUD USER</h1>
             </div>
@@ -79,7 +80,7 @@ const MainPage = () => {
                 </form>
             </div>
         </div>
-        </NavBar>
+        
     );
 };
 
