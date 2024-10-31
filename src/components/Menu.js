@@ -15,15 +15,19 @@ const Menu = () => {
         try {
             const response = await fetch(`${BASE_URL}/`);
             
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+    
             // Verificar si la respuesta es JSON
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 const data = await response.json();
+                console.log("Data received:", data);
                 setUsuarios(data);
                 setMensaje("");
             } else {
-                // Manejar caso donde la respuesta no es JSON
-                throw new Error("La respuesta no es JSON. Verifica la configuración de CORS o URL.");
+                console.error("La respuesta no es JSON. Posible problema de CORS o URL incorrecta.");
+                setMensaje("Error al listar usuarios. Verifica la API y CORS.");
             }
         } catch (error) {
             console.error("Error al listar usuarios:", error);
