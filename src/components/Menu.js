@@ -14,19 +14,22 @@ const Menu = () => {
     const listarUsuarios = async () => {
         try {
             const response = await fetch(`${BASE_URL}/`);
-            
+    
             console.log("Response status:", response.status);
             console.log("Response headers:", response.headers);
     
-            // Verificar si la respuesta es JSON
             const contentType = response.headers.get("content-type");
+    
+            // Verifica si el tipo de contenido es JSON
             if (contentType && contentType.includes("application/json")) {
                 const data = await response.json();
                 console.log("Data received:", data);
                 setUsuarios(data);
                 setMensaje("");
             } else {
-                console.error("La respuesta no es JSON. Posible problema de CORS o URL incorrecta.");
+                // Si la respuesta no es JSON, intenta leerla como texto para ver si contiene un mensaje de error
+                const text = await response.text();
+                console.error("La respuesta no es JSON. Respuesta recibida:", text);
                 setMensaje("Error al listar usuarios. Verifica la API y CORS.");
             }
         } catch (error) {
@@ -34,6 +37,7 @@ const Menu = () => {
             setMensaje("Error al listar usuarios. Verifica la API y CORS.");
         }
     };
+    
     
 
     useEffect(() => {
