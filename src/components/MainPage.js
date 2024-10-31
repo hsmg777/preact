@@ -30,13 +30,13 @@ const MainPage = () => {
 
             const data = await response.json();
 
-            if (response.status === 200 && data.valid && data.isAdmin === "Y") {
+            if (response.status === 200 && data.valid && data.isAdmin === "Y ") {
                 alert('Bienvenido admin, acceso correcto');
                 history.push({
                     pathname: '/Menu',
                     state: { logged: true }
                 });
-            } else if (response.status === 200 && data.valid && data.isAdmin === "N") {
+            } else if (response.status === 200 && data.valid && data.isAdmin === "N ") {
                 alert('Bienvenido usuario, acceso correcto');
                 history.push({
                     pathname: '/menuUser',
