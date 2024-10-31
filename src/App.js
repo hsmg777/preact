@@ -4,6 +4,7 @@ import MainPage from './components/MainPage';
 import Register from './components/Register';
 import Menu from './components/Menu';
 import MenuUsers from './components/MenuUsers';
+import HistorialOrdenes from './components/HistorialOrdenes';
 import { PrivateRoute } from './components/PrivateRoute';
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <PrivateRoute path="/registrar" exact component={Register} />
           <PrivateRoute path="/Menu" exact component={Menu}/>
           <PrivateRoute path="/menuUser" exact component={MenuUsers} />
+          <PrivateRoute path="/historialOrdenes" exact component={HistorialOrdenes} />
         </Switch>
       </div>
     </Router>

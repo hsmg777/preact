@@ -10,7 +10,7 @@ const Navbar = () => {
       <Link to="/Menu" className={location.pathname === '/Menu' ? 'active' : ''}>
         Gestionar Usuarios
       </Link>
-      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+      <Link to="/historialOrdenes" className={location.pathname === '/historialOrdenes' ? 'active' : ''}>
         Historial Ordenes
       </Link>
       <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
