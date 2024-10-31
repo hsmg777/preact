@@ -14,24 +14,23 @@ const Menu = () => {
     const listarUsuarios = async () => {
         try {
             const response = await fetch(`${BASE_URL}/`);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
+            
+            // Verificar si la respuesta es JSON
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                const data = await response.json();
+                setUsuarios(data);
+                setMensaje("");
+            } else {
+                // Manejar caso donde la respuesta no es JSON
+                throw new Error("La respuesta no es JSON. Verifica la configuración de CORS o URL.");
             }
-            const data = await response.json();
-
-            // Aplicamos trim() a la propiedad isAdmin para limpiar espacios
-            const usuariosLimpios = data.map(user => ({
-                ...user,
-                isAdmin: user.isAdmin ? user.isAdmin.trim() : null
-            }));
-
-            setUsuarios(usuariosLimpios);
-            setMensaje("");
         } catch (error) {
             console.error("Error al listar usuarios:", error);
-            setMensaje("Error al listar usuarios.");
+            setMensaje("Error al listar usuarios. Verifica la API y CORS.");
         }
     };
+    
 
     useEffect(() => {
         listarUsuarios();
