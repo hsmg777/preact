@@ -211,6 +211,14 @@ const Menu = () => {
                                     />
                                 </td>
                                 <td>
+                                    <input
+                                        type="text"
+                                        name="isAdmin?"
+                                        value={usuario.isAdmin}
+                                        onChange={(e) => handleInputChange(usuario.id_User, e)}
+                                    />
+                                </td>
+                                <td>
                                     <button
                                         onClick={() =>
                                             actualizarUsuario(usuario.id_User, {
