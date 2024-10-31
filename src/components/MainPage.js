@@ -51,6 +51,7 @@ const MainPage = () => {
     }
 
     return (
+        <NavBar>
         <div className='main-page'>
             <div className='encabezado'>
                 <h1>PROYECTO CRUD USER</h1>
@@ -78,6 +79,7 @@ const MainPage = () => {
                 </form>
             </div>
         </div>
+        </NavBar>
     );
 };
 
