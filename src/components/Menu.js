@@ -14,11 +14,22 @@ const Menu = () => {
     const listarUsuarios = async () => {
         try {
             const response = await fetch(`${BASE_URL}/`);
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
             const data = await response.json();
-            setUsuarios(data);
+
+            // Aplicamos trim() a la propiedad isAdmin para limpiar espacios
+            const usuariosLimpios = data.map(user => ({
+                ...user,
+                isAdmin: user.isAdmin ? user.isAdmin.trim() : null
+            }));
+
+            setUsuarios(usuariosLimpios);
             setMensaje("");
         } catch (error) {
-            console.error("Error al listar usuarios", error);
+            console.error("Error al listar usuarios:", error);
+            setMensaje("Error al listar usuarios.");
         }
     };
 
@@ -30,16 +41,20 @@ const Menu = () => {
         console.log("Buscando usuario con ID:", idUsuario); 
         try {
             const response = await fetch(`${BASE_URL}/${idUsuario}`);
-            if (response.ok) {
-                const data = await response.json();
-                setUsuarios([data]);
-                setMensaje("");
-            } else {
+            if (!response.ok) {
                 setMensaje("Usuario no encontrado.");
                 setUsuarios([]);
+                return;
             }
+            const data = await response.json();
+
+            // Limpiar el campo isAdmin
+            data.isAdmin = data.isAdmin ? data.isAdmin.trim() : null;
+            
+            setUsuarios([data]);
+            setMensaje("");
         } catch (error) {
-            console.error("Error al buscar usuario", error);
+            console.error("Error al buscar usuario:", error);
             setMensaje("Error al buscar usuario.");
         }
     };
