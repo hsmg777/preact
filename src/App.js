@@ -5,11 +5,11 @@ import Register from './components/Register';
 import Menu from './components/Menu';
 import MenuUsers from './components/MenuUsers';
 import HistorialOrdenes from './components/HistorialOrdenes';
+import GestionarPlatos from './components/GestionarPlatos';
+import RegistrarPlato from './components/RegistarPlato';
 import { PrivateRoute } from './components/PrivateRoute';
 
-function Placeholder({ text }) {
-  return <h2>{text} - Página en construcción</h2>;
-}
+
 
 function App() {
   return (
@@ -21,11 +21,9 @@ function App() {
           <PrivateRoute path="/Menu" exact component={Menu} />
           <PrivateRoute path="/menuUser" exact component={MenuUsers} />
           <PrivateRoute path="/historialOrdenes" exact component={HistorialOrdenes} />
+          <PrivateRoute path="/gestionarPlatos" exact component={GestionarPlatos} />
+          <PrivateRoute path="/registrarPlato" exact component={RegistrarPlato} />
 
-          {/* Rutas placeholder */}
-          <PrivateRoute path="/historiaHoras" exact component={() => <Placeholder text="Historia horas laborales" />} />
-          <PrivateRoute path="/gestionarPlatos" exact component={() => <Placeholder text="Gestionar platos" />} />
-          <PrivateRoute path="/salir" exact component={() => <Placeholder text="Salir" />} />
         </Switch>
       </div>
     </Router>
