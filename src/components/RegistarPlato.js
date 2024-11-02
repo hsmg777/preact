@@ -13,8 +13,8 @@ const RegistrarPlato = () => {
         id_User: "",
     });
     const history = useHistory();
-    const USERS_URL = "https://c301-2800-bf0-165-1282-1c39-6b1-20c0-d646.ngrok-free.app/api/usuario";
-    const BASE_URL = "https://c301-2800-bf0-165-1282-1c39-6b1-20c0-d646.ngrok-free.app/api/plato";
+    const USERS_URL = "http://127.0.0.1:5000/api/usuario";
+    const BASE_URL = "https://256a-2800-bf0-165-1282-f479-31e-8559-5b93.ngrok-free.app/api/plato";
 
     // Función para listar usuarios administradores
     const listarUsuarios = async () => {
@@ -47,23 +47,23 @@ const RegistrarPlato = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "application/json"  // Asegura que el backend reciba y responda en JSON
                 },
                 body: JSON.stringify(newPlato),
-                credentials: "include"  // Configuración para soportar credenciales en caso necesario
+                mode: 'cors',
+                credentials: 'include', // Si usas cookies o autenticación basada en sesión
             });
             if (response.ok) {
                 setMensaje("Plato registrado con éxito.");
                 alert("Plato registrado con éxito.");
             } else {
-                const errorText = await response.text();
-                setMensaje(`Error al registrar el plato: ${errorText}`);
+                setMensaje("Error al registrar el plato.");
             }
         } catch (error) {
             console.error("Error al registrar plato:", error);
             setMensaje("Error al registrar plato.");
         }
     };
+    
     
 
     // Maneja la carga de la imagen y la convierte en Base64
