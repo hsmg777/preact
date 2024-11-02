@@ -5,7 +5,7 @@
   flex-direction: column; /* Para alinear en columna */
   justify-content: flex-start; /* Coloca el contenido al inicio, en la parte superior */
   align-items: center; /* Centra horizontalmente */
-  background-image: url('../../../public/fondo.jpeg');
+  background-image: url('/public/back.png');
   background-size: cover; /* Cubrir todo el contenedor */
   background-position: center; /* Centrar la imagen */
   text-align: center;

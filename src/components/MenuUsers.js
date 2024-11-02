@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import './styles/Menu.css';
+import './styles/MenuUsers.css';
 
 const MenuUsers = () =>{
 
@@ -8,7 +8,12 @@ const MenuUsers = () =>{
 
 return (
     <div className="mainUsers">
-        <h1>BIENVENIDO USUARIO</h1>
+        <div className="cabecera-usuarios">
+            <h1>BIENVENIDO USUARIO</h1>
+        </div>
+        <div className="cuerpo-usuarios">
+            <button className="pedir-boton">Realizar pedido</button>       
+        </div>
     </div>
 
 );};

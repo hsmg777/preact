@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-image: url('../../../public/fondo.jpeg');
+  background-image: url('/public/back.png');
   background-size: cover; /* Cubrir todo el contenedor */
   background-attachment: fixed; /* Asegura que el fondo se mantenga fijo */
   background-position: center;

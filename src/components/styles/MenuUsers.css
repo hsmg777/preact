@@ -1,0 +1,69 @@
+.mainUsers {
+    position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.mainUsers::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/public/back.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px); /* Aplicar desenfoque */
+    opacity: 0.7; /* Ajusta la opacidad para el efecto deseado */
+    z-index: -1;
+
+}
+
+.cabecera-usuarios {
+    margin-top: 15%;
+    padding: 10px;
+    z-index: 1; /* Asegura que el contenido esté sobre el fondo */
+}
+    .cabecera-usuarios h1 {
+        font-size: 60px;
+        color: rgb(255, 255, 255); /* Color del texto */
+        text-shadow: 
+            -1px -1px 0 #08088a,  
+            1px -1px 0 #08088a,  
+            -1px 1px 0 #08088a,  
+            1px 1px 0 #08088a; /* Contorno azul */
+        z-index: 1; /* Asegura que el contenido esté sobre el fondo */
+        padding: 10px;
+    }
+
+
+.cuerpo-usuarios {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 1;
+}
+
+.pedir-boton {
+    border: 1px solid rgb(13, 24, 119);
+    background-color: white;
+    color: rgb(0, 60, 255);
+    font-size: 25px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-bottom: 100%;
+    z-index: 1;
+}
+
+.pedir-boton:hover {
+    background-color: rgb(13, 24, 119);
+    color: white;
+}

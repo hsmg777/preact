@@ -47,7 +47,7 @@ const Navbar = ({ logged }) => {
       <button onClick={() => handleOrders("/historialOrdenes")} className={location.pathname === '/historialOrdenes' ? 'active' : ''}>
         Historial Ordenes
       </button>
-      <button onClick={() => handleHoras("/historiaHoras")} className={location.pathname === '/historiaHoras' ? 'active' : ''}>
+      <button onClick={() => handleHoras("/historialHoras")} className={location.pathname === '/historialHoras' ? 'active' : ''}>
         Historia horas laborales
       </button>
       <button onClick={() => handlePlatos("/gestionarPlatos")} className={location.pathname === '/gestionarPlatos' ? 'active' : ''}>
