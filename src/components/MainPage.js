@@ -10,7 +10,7 @@ const MainPage = () => {
     const history = useHistory();
 
     // URL base de la API expuesta por Ngrok
-    const BASE_URL = "https://0d45-2800-bf0-165-1282-f479-31e-8559-5b93.ngrok-free.app/api/usuario";
+    const BASE_URL = "https://056d-2800-bf0-165-1282-e9e3-84b-e335-a3bb.ngrok-free.app/api/usuario";
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -40,7 +40,7 @@ const MainPage = () => {
             } else if (response.status === 200 && data.valid && data.isAdmin === "N ") {
                 alert('Bienvenido usuario, acceso correcto');
                 history.push({
-                    pathname: '/menuUser',
+                    pathname: '/menuChef',
                     state: { logged: true }
                 });
             } else {

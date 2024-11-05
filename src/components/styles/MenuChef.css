@@ -1,0 +1,115 @@
+.main-menu-chef {
+    background-color: #f4f4f9;
+    background-image: url("../../../public/back.png");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px; /* Espacio para el navbar fijo */
+    min-height: 100vh;
+    color: black;
+}
+
+.cabecera-menu-chef {
+    text-align: center;
+    margin-bottom: 20px;
+    
+}
+
+.cabecera-menu-chef h1 {
+    margin: 10px;
+    color: white;
+}
+
+.cuerpo-menu-chef {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.cuadrito-menu-chef {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.registro-horas {
+    display: flex;
+    flex-direction: column;
+    width: 20%; /* Ocupa poco espacio en la izquierda */
+    margin-right: 20px;
+}
+
+.registro-horas button {
+    padding: 10px 15px;
+    margin: 5px 0;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.registro-horas button:hover {
+    background-color: #0056b3;
+}
+
+.historial-pedidos {
+    flex-grow: 1; /* Ocupa el resto del espacio en la derecha */
+}
+
+.tabla-pedidos-chef {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.tabla-pedidos-chef thead {
+    background-color: #007bff;
+}
+
+.tabla-pedidos-chef th, .tabla-pedidos-chef td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-pedidos-chef th {
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-pedidos-chef tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternado para filas */
+}
+
+.tabla-pedidos-chef input {
+    width: 80%;
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.tabla-pedidos-chef button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.tabla-pedidos-chef button:hover {
+    background-color: #0056b3;
+}

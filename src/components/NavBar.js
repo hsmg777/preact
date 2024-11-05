@@ -36,6 +36,12 @@ const Navbar = ({ logged }) => {
         state: { logged: false}
       });
   };
+  const handleMesas= () => {
+    history.push({
+        pathname: '/mesas',
+        state: { logged: true}
+      });
+  };
   
   
 
@@ -43,6 +49,9 @@ const Navbar = ({ logged }) => {
     <nav className="navbar">
       <button onClick={() => handleMenu()} className={location.pathname === '/Menu' ? 'active' : ''}>
         Gestionar Usuarios
+      </button>
+      <button onClick={() => handleMesas("/mesas")} className={location.pathname === '/mesas' ? 'active' : ''}>
+        Gestionar Mesas
       </button>
       <button onClick={() => handleOrders("/historialOrdenes")} className={location.pathname === '/historialOrdenes' ? 'active' : ''}>
         Historial Ordenes
@@ -56,6 +65,7 @@ const Navbar = ({ logged }) => {
       <button onClick={() => handleSalir("/salir")} className={location.pathname === '/salir' ? 'active' : ''}>
         Salir
       </button>
+      
     </nav>
   );
 };

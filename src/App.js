@@ -8,6 +8,8 @@ import HistorialOrdenes from './components/HistorialOrdenes';
 import GestionarPlatos from './components/GestionarPlatos';
 import RegistrarPlato from './components/RegistarPlato';
 import HistorialHoras from './components/HIstorialHoras';
+import GestionarMesas from './components/GestionarMesas';
+import MenuChef from './components/MenuChef';
 import { PrivateRoute } from './components/PrivateRoute';
 
 
@@ -25,6 +27,8 @@ function App() {
           <PrivateRoute path="/gestionarPlatos" exact component={GestionarPlatos} />
           <PrivateRoute path="/registrarPlato" exact component={RegistrarPlato} />
           <PrivateRoute path="/historialHoras" exact component={HistorialHoras} />
+          <PrivateRoute path="/mesas" exact component={GestionarMesas} />
+          <PrivateRoute path="/menuChef" exact component={MenuChef} />
         </Switch>
       </div>
     </Router>

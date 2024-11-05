@@ -5,7 +5,7 @@ import Navbar from "./NavBar";
 const HistorialHoras = () => {
     const [historial, setHistorial] = useState([]);
     const [fecha, setFecha] = useState("");
-    const BASE_URL = "https://0d45-2800-bf0-165-1282-f479-31e-8559-5b93.ngrok-free.app/api/registrohoras";
+    const BASE_URL = "http://127.0.0.1:5000/api/registrohoras";
 
     const listarHistorial = async () => {
         try {

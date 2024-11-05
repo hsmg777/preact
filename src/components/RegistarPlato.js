@@ -14,7 +14,7 @@ const RegistrarPlato = () => {
     });
     const history = useHistory();
     const USERS_URL = "http://127.0.0.1:5000/api/usuario";
-    const BASE_URL = "https://0d45-2800-bf0-165-1282-f479-31e-8559-5b93.ngrok-free.app/api/plato";
+    const BASE_URL = "https://056d-2800-bf0-165-1282-e9e3-84b-e335-a3bb.ngrok-free.app/api/plato";
 
     // Función para listar usuarios administradores
     const listarUsuarios = async () => {

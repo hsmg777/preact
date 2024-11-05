@@ -1,0 +1,92 @@
+/* GestionarMesas.css */
+
+.main-Gestion-Mesas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px; /* Espacio para el navbar fijo */
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.cabecera-gestion-mesas {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cabecera-gestion-mesas h1 {
+    margin: 10px;
+    color: black;
+}
+
+.cuerpo-gestion-mesas {
+    width: 80%;
+    max-width: 1000px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido dentro del contenedor */
+}
+
+.barra-mesas {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.barra-mesas input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.barra-mesas button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.barra-mesas button:hover {
+    background-color: #0056b3;
+}
+
+.tabla-mesas {
+    width: 100%;
+    max-width: 1000px; /* Limita el ancho máximo de la tabla */
+    border-collapse: collapse;
+    text-align: center;
+    margin: 0 auto; /* Centra la tabla horizontalmente */
+}
+
+.tabla-mesas thead {
+    background-color: #007bff;
+}
+
+.tabla-mesas th, .tabla-mesas td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-mesas th {
+    color: white;
+    font-weight: bold;
+}
+
+.tabla-mesas td {
+    color: black; /* Asegura que el texto en las celdas sea negro */
+}
+
+.tabla-mesas tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternado para filas */
+}
