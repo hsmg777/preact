@@ -10,7 +10,7 @@ const MainPage = () => {
     const history = useHistory();
 
     // URL base de la API expuesta por Ngrok
-    const BASE_URL = "https://056d-2800-bf0-165-1282-e9e3-84b-e335-a3bb.ngrok-free.app/api/usuario";
+    const BASE_URL = "https://98e5-157-100-130-116.ngrok-free.app/api/usuario";
 
     const handleLogin = async (e) => {
         e.preventDefault();
