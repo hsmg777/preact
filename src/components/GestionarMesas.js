@@ -24,7 +24,7 @@ const GestionarMesas = () => {
             alert("Por favor, ingrese un nombre para la mesa.");
             return;
         }
-
+    
         try {
             const response = await fetch(BASE_URL, {
                 method: "POST",
@@ -33,7 +33,7 @@ const GestionarMesas = () => {
                 },
                 body: JSON.stringify({ nombre: nuevoNombre }),
             });
-
+    
             if (response.ok) {
                 alert("Mesa creada con éxito.");
                 setNuevoNombre(""); // Limpia el campo de entrada
@@ -46,6 +46,7 @@ const GestionarMesas = () => {
             alert("Error al crear la mesa.");
         }
     };
+    
 
     useEffect(() => {
         listarMesas();
@@ -80,6 +81,7 @@ const GestionarMesas = () => {
                                 <tr key={mesa.id_mesa}>
                                     <td>{mesa.id_mesa}</td>
                                     <td>{mesa.nombre}</td>
+                                    <td><button >Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

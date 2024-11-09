@@ -7,7 +7,7 @@ const HistorialOrdenes = () => {
 
     const listarOrdenes = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/orden");
+            const response = await fetch("http://127.0.0.1:5000/api/orden/detalles");
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
@@ -55,12 +55,12 @@ const HistorialOrdenes = () => {
                             {ordenes.map((orden) => (
                                 <tr key={orden.id_orden}>
                                     <td>{orden.id_orden}</td>
-                                    <td>{orden.Mesa}</td>
-                                    <td>{orden.Plato}</td>
-                                    <td>{orden.Cantidad}</td>
-                                    <td>{orden.Observacion}</td>
-                                    <td>{formatDate(orden.Fecha)}</td>
-                                    <td>{orden.Estado}</td>
+                                    <td>{orden.Mesa}</td>  {/* Cambiado a minúscula */}
+                                    <td>{orden.Plato}</td>  {/* Cambiado a minúscula */}
+                                    <td>{orden.Cantidad}</td>  {/* Cambiado a minúscula */}
+                                    <td>{orden.Observacion}</td>  {/* Cambiado a minúscula */}
+                                    <td>{formatDate(orden.Fecha)}</td>  {/* Cambiado a minúscula */}
+                                    <td>{orden.Estado}</td>  {/* Cambiado a minúscula */}
                                 </tr>
                             ))}
                         </tbody>
