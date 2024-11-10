@@ -6,9 +6,9 @@ const MenuChef = () => {
     const [ord, setOrd] = useState([]);
     const [temporaryStates, setTemporaryStates] = useState({});
     const [registroId, setRegistroId] = useState(null); // Guarda el ID del registro de horas
-    const BASE_URL_DETALLES = "https://1b0a-181-198-15-238.ngrok-free.app/api/orden/detalles";
-    const BASE_URL_ORDEN = "https://1b0a-181-198-15-238.ngrok-free.app/api/orden";
-    const BASE_URL_REGISTRO_HORAS = "https://1b0a-181-198-15-238.ngrok-free.app/api/registrohoras";
+    const BASE_URL_DETALLES = "http://127.0.0.1:5000/api/orden/detalles";
+    const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden";
+    const BASE_URL_REGISTRO_HORAS = "http://127.0.0.1:5000/api/registrohoras";
 
     // Función para listar las órdenes del endpoint /api/orden/detalles
     const listarOrdenes = async () => {
