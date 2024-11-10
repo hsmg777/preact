@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+CORE Restaurante (React + Flask + Ngrok)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyceto "MVC Restaurante" fue desadesarrollado de la siguiente manera:
+FRONT END -> REACT
+API MVC -> FLASK
+BASE DE DATOS -> SQL SERVER MANAGMENT
 
-## Available Scripts
+En este mini core el frontend fue deployado en vercel con el siguiente URL: 
+https://preact-mauve.vercel.app
+el cual se conecta con el link de ngrok "https://1b0a-181-198-15-238.ngrok-free.app" que simula un despliegue de la API local de FLASK para poder consumir todos sus métodos CRUD, la api se conecta con l base de datos para poder obtener los datos.
 
-In the project directory, you can run:
+ESTA aplicación fue diseñada para ayudar a una mejor gestión de el pedido de platos de un menú de un restaurante asi como mejorar la experiencia del usuario al ir a un restaurante.
+ 
+POR EL MOMENTO LA APP esta en desarrollo tiene en funcionamiento la parte de el ADMINISTRADOR Y TODO LO QUE EL PUEDE REALIZAR (Gestionar usuarios, Gestionar Mesas, Historial de ordenes, Historial de horas laboradas por los empleados y gestión de platos del menú)
 
-### `npm start`
+Para su funcionamiento tendrás que: 
+ En el código de la API:
+ - verificar la conexión con la base de datos de SQL 
+ - verificar que tengas todas las instalaciones necesarias para Flask, etc
+ EN SQL:
+	 CREAR UNA BD CON EL NOMBRE: "INGWEB"
+	CREAR TABLAS DE ("Mesa", "Orden", "Plato", "registroHoras", 	"Usuario")
+ 
+/* OJO TIENES QUE CORRER LA API LOCALMENTE PRIMERO CON Python app.py*/
+luego en un cmd correr el comando (ngrok http 50000)
+el link que te da ngrok lo usaras en el frontend
+ EN REACT:
+	- verificar el link de ngrok
+	y la despliegas en vercel nuevamente 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+con estas indicaciones el proyecto esta listo para usarse
+ link de api: 
+ https://github.com/hsmg777/ApiFlask
+ link de react: 
+ https://github.com/hsmg777/preact
+ 
 
-### `npm test`
+contacto:
+hayland.montalvo@udla.edu.ec
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
