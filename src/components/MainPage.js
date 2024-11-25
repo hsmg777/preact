@@ -1,86 +1,116 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom'; 
+import { useHistory } from 'react-router-dom'; 
 import '../components/styles/MainPage.css';
-
 
 const MainPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [mensaje, setMensaje] = useState(''); 
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    // URL base de la API expuesta por Ngrok
-    const BASE_URL = "https://1b0a-181-198-15-238.ngrok-free.app/api/usuario";
+    const BASE_URL = "http://127.0.0.1:5000/api/usuario";
+    const URL_MESA = "http://127.0.0.1:5000/api/mesa/validate";
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        const UserPsw = {
-            username: username,
-            contrasenia: password  
-        };
+        if (!username || !password) {
+            setMensaje('Por favor, complete todos los campos.');
+            return;
+        }
+
+        setLoading(true);
 
         try {
-            const response = await fetch(`${BASE_URL}/validate`, {
+            //validar al usuario
+            const UserPsw = {
+                username: username,
+                contrasenia: password
+            };
+
+            const userResponse = await fetch(`${BASE_URL}/validate`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(UserPsw)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(UserPsw),
             });
 
-            const data = await response.json();
-
-            if (response.status === 200 && data.valid && data.isAdmin === "Y ") {
-                alert('Bienvenido admin, acceso correcto');
-                history.push({
-                    pathname: '/Menu',
-                    state: { logged: true }
-                });
-            } else if (response.status === 200 && data.valid && data.isAdmin === "N ") {
-                alert('Bienvenido usuario, acceso correcto');
-                history.push({
-                    pathname: '/menuChef',
-                    state: { logged: true }
-                });
-            } else {
-                setMensaje('Usuario o contraseña incorrectos, revise sus credenciales');
+            if (userResponse.status === 200) {
+                const userData = await userResponse.json();
+                if (userData.valid) {
+                    const isAdmin = userData.isAdmin?.trim();
+                    if (isAdmin === "Y") {
+                        alert("Bienvenido admin, acceso correcto");
+                        history.push({ pathname: '/Menu', state: { logged: true } });
+                        return;
+                    } else if (isAdmin === "N") {
+                        alert("Bienvenido usuario, acceso correcto");
+                        history.push({ pathname: `/menuChef/${userData.id_User}`, state: { logged: true } });
+                        return;
+                    }
+                }
             }
+
+            // validar como mesa
+            const MesaPsw = {
+                nombre: username,
+                passw: password
+            };
+
+            const mesaResponse = await fetch(URL_MESA, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(MesaPsw),
+            });
+
+            if (mesaResponse.status === 200) {
+                const mesaData = await mesaResponse.json();
+                if (mesaData.valid) {
+                    alert("Bienvenido, acceso correcto como mesa.");
+                    history.push({ pathname: `/menuUser/${mesaData.id_mesa}`, state: { logged: true } });
+                    return;
+                }
+            }
+
+            // Si ninguna validación es exitosa
+            alert("Usuario o contraseña incorrectos, revise sus credenciales");
         } catch (error) {
-            setMensaje('Hubo un error al comunicarse con el servidor');
+            console.error("Error al comunicarse con el servidor:", error);
+            alert("Hubo un error al comunicarse con el servidor");
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     return (
-        <div className='main-page'>
-            
-            <div className='encabezado'>
+        <div className="main-page">
+            <div className="encabezado">
                 <h1>PROYECTO CRUD USER</h1>
             </div>
-            <div className='cuerpo'>
-                <form className='form' onSubmit={handleLogin}>
+            <div className="cuerpo">
+                <form className="form" onSubmit={handleLogin}>
                     <h2>BIENVENIDO</h2>
                     <h4>Ingrese su usuario</h4>
                     <input 
-                        type='text' 
+                        type="text" 
                         value={username} 
                         onChange={(e) => setUsername(e.target.value)} 
                         required 
                     />
                     <h4>Ingrese su contraseña</h4>
                     <input 
-                        type='password' 
+                        type="password" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
                         required 
                     />
-                    <button type="submit" className='reservar-button'>Acceder</button>
-                    {mensaje && <p style={{ color: 'red' }}>{mensaje}</p>}
-                    
+                    <button type="submit" className="reservar-button" disabled={loading}>
+                        {loading ? "Accediendo..." : "Acceder"}
+                    </button>
+                    {mensaje && <p className="error-message">{mensaje}</p>}
                 </form>
             </div>
         </div>
-        
     );
 };
 

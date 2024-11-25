@@ -1,94 +1,58 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import './styles/MenuChef.css';
 
 const MenuChef = () => {
+    const { id_User } = useParams();
     const [ordenes, setOrdenes] = useState([]);
-    const [ord, setOrd] = useState([]);
-    const [temporaryStates, setTemporaryStates] = useState({});
-    const [registroId, setRegistroId] = useState(null); // Guarda el ID del registro de horas
+    const [detallesOrdenes, setDetallesOrdenes] = useState([]);
+    const [registroHoras, setRegistroHoras] = useState({});
+
     const BASE_URL_DETALLES = "http://127.0.0.1:5000/api/orden/detalles";
-    const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden";
-    const BASE_URL_REGISTRO_HORAS = "http://127.0.0.1:5000/api/registrohoras";
+    const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden/";
+    const BASE_URL_REGISTRO_HORAS = "http://127.0.0.1:5000/api/registrotiempo/";
 
-    // Función para listar las órdenes del endpoint /api/orden/detalles
-    const listarOrdenes = async () => {
+    useEffect(() => {
+        if (!id_User) {
+            alert("No tienes permiso para acceder a esta página.");
+        } else {
+            cargarDatos();
+        }
+    }, [id_User]);
+
+    const cargarDatos = async () => {
         try {
-            const response = await fetch(BASE_URL_DETALLES);
-            if (!response.ok) throw new Error("Error al obtener las órdenes");
-            const data = await response.json();
-            setOrdenes(data);
+            const [responseDetalles, responseOrdenes] = await Promise.all([
+                fetch(BASE_URL_DETALLES),
+                fetch(BASE_URL_ORDEN),
+            ]);
+
+            if (!responseDetalles.ok || !responseOrdenes.ok) {
+                throw new Error("Error al obtener datos de las APIs");
+            }
+
+            const dataDetalles = await responseDetalles.json();
+            const dataOrdenes = await responseOrdenes.json();
+
+            setDetallesOrdenes(dataDetalles);
+            setOrdenes(dataOrdenes);
+            console.log(detallesOrdenes);
         } catch (error) {
-            console.error("Error al listar órdenes:", error);
+            console.error("Error al cargar datos:", error);
         }
     };
 
-    // Función para listar las órdenes del endpoint /api/orden
-    const listarOrd = async () => {
-        try {
-            const res = await fetch(BASE_URL_ORDEN);
-            if (!res.ok) throw new Error("Error al obtener las órdenes");
-            const data = await res.json();
-            setOrd(data);
-        } catch (error) {
-            console.error("Error al listar ord:", error);
-        }
-    };
+    const registrarInicio = async (orden) => {
+        const now = new Date();
+        const tiempoInicio = now.toTimeString().split(" ")[0];
+        const fecha = now.toISOString().split("T")[0];
 
-    // Función para manejar el cambio de estado temporal
-    const handleEstadoChange = (id_orden, newEstado) => {
-        setTemporaryStates((prevStates) => ({
-            ...prevStates,
-            [id_orden]: newEstado
-        }));
-    };
-
-    // Función para actualizar la orden
-    const actualizarOrden = async (orden) => {
-        const matchedOrder = ord.find(o => o.id_orden === orden.id_orden);
-        if (!matchedOrder) {
-            alert("Orden no encontrada para actualizar.");
+        // Buscar `id_plato` desde la lista de órdenes
+        const ordenCompleta = ordenes.find((o) => o.id_orden === orden.id_orden);
+        if (!ordenCompleta || !ordenCompleta.id_plato) {
+            alert("No se encontró el plato asociado a esta orden.");
             return;
         }
-
-        const newEstado = temporaryStates[orden.id_orden] || orden.Estado;
-
-        try {
-            const response = await fetch(`${BASE_URL_ORDEN}/${orden.id_orden}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    cantidad: matchedOrder.cantidad,
-                    id_plato: matchedOrder.id_plato,
-                    id_mesa: matchedOrder.id_mesa,
-                    observacion: orden.Observacion,
-                    estado: newEstado,
-                }),
-            });
-
-            if (response.ok) {
-                alert("Orden actualizada con éxito.");
-                setTemporaryStates((prevStates) => {
-                    const { [orden.id_orden]: _, ...rest } = prevStates;
-                    return rest;
-                });
-                listarOrdenes();
-                listarOrd();
-            } else {
-                alert("Error al actualizar la orden.");
-            }
-        } catch (error) {
-            console.error("Error al actualizar la orden:", error);
-            alert("Error al actualizar la orden.");
-        }
-    };
-
-    // Función para registrar la hora de ingreso (Clock-In)
-    const registroIngreso = async () => {
-        const now = new Date();
-        const horaIngreso = now.toTimeString().split(' ')[0];
-        const fecha = now.toISOString().split('T')[0];
 
         try {
             const response = await fetch(BASE_URL_REGISTRO_HORAS, {
@@ -97,127 +61,168 @@ const MenuChef = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    horaIngreso: horaIngreso,
+                    id_User: id_User,
+                    id_plato: ordenCompleta.id_plato,
                     fecha: fecha,
-                    id_User: 1, // Reemplaza esto con el ID del usuario autenticado
+                    tiempoInicio: tiempoInicio,
+                    tiempoFin: null,
+                    tiempoTotal: null,
                 }),
             });
 
             if (response.ok) {
                 const data = await response.json();
-                setRegistroId(data.id_registroHoras); // Guarda el ID del registro
-                alert("Clock-In registrado con éxito.");
+                setRegistroHoras((prevState) => ({
+                    ...prevState,
+                    [orden.id_orden]: data.id_registroTiempo,
+                }));
+                alert(`Inicio registrado para la orden ${orden.id_orden}`);
             } else {
-                alert("Error al registrar Clock-In.");
+                alert("Error al registrar el inicio.");
             }
         } catch (error) {
-            console.error("Error al registrar Clock-In:", error);
-            alert("Error al registrar Clock-In.");
+            console.error("Error al registrar el inicio:", error);
+            alert("Error al registrar el inicio.");
         }
     };
 
-    // Función para registrar la hora de salida y calcular horas laboradas (Clock-Out)
-    const registroSalida = async () => {
+    const registrarFin = async (orden) => {
+        const now = new Date();
+        const tiempoFin = now.toTimeString().split(" ")[0]; // Hora actual
+    
+        const registroId = registroHoras[orden.id_orden]; // Recuperar el id_registroHoras asociado
         if (!registroId) {
-            alert("Primero debes hacer Clock-In.");
+            alert("Debes registrar el inicio antes de registrar el fin.");
             return;
         }
-
-        const now = new Date();
-        const horaSalida = now.toTimeString().split(' ')[0];
-
+    
         try {
-            const response = await fetch(`${BASE_URL_REGISTRO_HORAS}/${registroId}`, {
+            // Obtener el registro actual de la API
+            const responseGet = await fetch(`${BASE_URL_REGISTRO_HORAS}${registroId}`);
+            if (!responseGet.ok) {
+                alert("Error al obtener el registro actual.");
+                return;
+            }
+            const registroActual = await responseGet.json();
+    
+            // Calcular tiempo total
+            const tiempoInicio = registroActual.tiempoInicio;
+            const [horaInicioH, horaInicioM, horaInicioS] = tiempoInicio.split(":").map(Number);
+            const [horaFinH, horaFinM, horaFinS] = tiempoFin.split(":").map(Number);
+    
+            const tiempoInicioDate = new Date();
+            tiempoInicioDate.setHours(horaInicioH, horaInicioM, horaInicioS);
+    
+            const tiempoFinDate = new Date();
+            tiempoFinDate.setHours(horaFinH, horaFinM, horaFinS);
+    
+            const diferenciaMs = tiempoFinDate - tiempoInicioDate; // Diferencia en milisegundos
+            const tiempoTotal = new Date(diferenciaMs).toISOString().slice(11, 19); // Formato HH:MM:SS
+    
+            // JSON para actualizar el registro de tiempo
+            const payloadRegistroTiempo = {
+                id_User: registroActual.id_User,
+                id_plato: registroActual.id_plato,
+                fecha: registroActual.fecha,
+                tiempoInicio: registroActual.tiempoInicio,
+                tiempoFin: tiempoFin,
+                tiempoTotal: tiempoTotal,
+            };
+    
+            console.log("Payload enviado a /api/registrotiempo:", payloadRegistroTiempo);
+    
+            // Realizar el PUT para actualizar el registro de tiempo
+            const responsePutRegistro = await fetch(`${BASE_URL_REGISTRO_HORAS}${registroId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    horaSalida: horaSalida,
-                }),
+                body: JSON.stringify(payloadRegistroTiempo),
             });
-
-            if (response.ok) {
-                alert("Clock-Out registrado con éxito.");
-                setRegistroId(null); // Resetea el ID del registro
+    
+            if (responsePutRegistro.ok) {
+                // JSON para actualizar el estado de la orden
+                const payloadOrden = {
+                    estado: "Completo",
+                    observacion: orden.Observacion || "Sin observación",
+                    id_mesa: orden.id_mesa, 
+                    cantidad: orden.Cantidad, 
+                    id_plato: orden.id_plato || registroActual.id_plato, 
+                };
+    
+                console.log("Payload enviado a /api/orden:", payloadOrden);
+    
+                // Realizar el PUT para cambiar el estado de la orden
+                const responsePutOrden = await fetch(`${BASE_URL_ORDEN}${orden.id_orden}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payloadOrden),
+                });
+    
+                if (responsePutOrden.ok) {
+                    alert(`Orden ${orden.id_orden} completada con éxito.`);
+                    cargarDatos(); // Actualizar la lista de datos
+                } else {
+                    const errorData = await responsePutOrden.json();
+                    console.error("Error al actualizar el estado de la orden:", errorData);
+                    alert("Error al cambiar el estado de la orden.");
+                }
             } else {
-                alert("Error al registrar Clock-Out.");
+                const errorDataRegistro = await responsePutRegistro.json();
+                console.error("Error al actualizar el registro de tiempo:", errorDataRegistro);
+                alert("Error al finalizar el registro de tiempo.");
             }
         } catch (error) {
-            console.error("Error al registrar Clock-Out:", error);
-            alert("Error al registrar Clock-Out.");
+            console.error("Error al registrar el fin:", error);
+            alert("Error al registrar el fin.");
         }
     };
-
-    useEffect(() => {
-        listarOrdenes();
-        listarOrd();
-    }, []);
-
+    
+    
+    
     return (
         <div className="main-menu-chef">
             <div className="cabecera-menu-chef">
-                <h1>Bienvenido</h1>
+                <h1>Bienvenido, Usuario {id_User}</h1>
             </div>
             <div className="cuerpo-menu-chef">
-                <div className="cuadrito-menu-chef">
-                    <div className="registro-horas">
-                        <button onClick={registroIngreso}>Clock-In</button>
-                        <button onClick={registroSalida}>Clock-Out</button>
-                        <button>Ver horas laboradas</button>
-                    </div>
-                    <div className="historial-pedidos">
-                        <h2>Órdenes Pendientes</h2>
-                        <table className="tabla-pedidos-chef">
-                            <thead>
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Mesa</td>
-                                    <td>Plato</td>
-                                    <td>Cantidad</td>
-                                    <td>Observacion</td>
-                                    <td>Estado</td>
-                                    <td>Acciones</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {ordenes
-                                    .filter((orden) => orden.Estado === "Pendiente")
-                                    .map((orden) => (
-                                        <tr key={orden.id_orden}>
-                                            <td>{orden.id_orden}</td>
-                                            <td>{orden.Mesa}</td>
-                                            <td>{orden.Plato}</td>
-                                            <td>{orden.Cantidad}</td>
-                                            <td>{orden.Observacion}</td>
-                                            <td>
-                                                <select
-                                                    value={temporaryStates[orden.id_orden] || orden.Estado}
-                                                    onChange={(e) =>
-                                                        handleEstadoChange(
-                                                            orden.id_orden,
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                >
-                                                    <option value="Pendiente">Pendiente</option>
-                                                    <option value="Completo">Completo</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button
-                                                    onClick={() =>
-                                                        actualizarOrden(orden)
-                                                    }
-                                                >
-                                                    Actualizar
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="historial-pedidos">
+                    <h2>Órdenes Pendientes</h2>
+                    <table className="tabla-pedidos-chef">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>idMesa</td>
+                                <td>Mesa</td>
+                                <td>Plato</td>
+                                <td>Cantidad</td>
+                                <td>Observación</td>
+                                <td>Estado</td>
+                                <td>Acciones</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {detallesOrdenes
+                                .filter((orden) => orden.Estado === "Pendiente")
+                                .map((orden) => (
+                                    <tr key={orden.id_orden}>
+                                        <td>{orden.id_orden}</td>
+                                        <td>{orden.id_mesa}</td>
+                                        <td>{orden.Mesa}</td>
+                                        <td>{orden.Plato}</td>
+                                        <td>{orden.Cantidad}</td>
+                                        <td>{orden.Observacion}</td>
+                                        <td>{orden.Estado}</td>
+                                        <td>
+                                            <button onClick={() => registrarInicio(orden)}>Empezar</button>
+                                            <button onClick={() => registrarFin(orden)}>Terminar</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -13,8 +13,8 @@ const Register = () => {
     const [mensaje, setMensaje] = useState('');
     const history = useHistory();
 
-    // URL base de la API expuesta por Ngrok
-    const BASE_URL = "https://1b0a-181-198-15-238.ngrok-free.app/api/usuario";
+    
+    const BASE_URL = "http://127.0.0.1:5000/api/usuario";
 
     const volver = async () => {
         history.push({

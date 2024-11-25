@@ -57,7 +57,7 @@ const Navbar = ({ logged }) => {
         Historial Ordenes
       </button>
       <button onClick={() => handleHoras("/historialHoras")} className={location.pathname === '/historialHoras' ? 'active' : ''}>
-        Historia horas laborales
+        Top 3 chefs mas rapidos
       </button>
       <button onClick={() => handlePlatos("/gestionarPlatos")} className={location.pathname === '/gestionarPlatos' ? 'active' : ''}>
         Gestionar platos

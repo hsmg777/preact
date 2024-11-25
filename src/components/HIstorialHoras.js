@@ -3,81 +3,106 @@ import './styles/HistorialHoras.css';
 import Navbar from "./NavBar";
 
 const HistorialHoras = () => {
-    const [historial, setHistorial] = useState([]);
-    const [fecha, setFecha] = useState("");
-    const BASE_URL = "http://127.0.0.1:5000/api/registrohoras";
+    const [platos, setPlatos] = useState([]);
+    const [top3, setTop3] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedPlato, setSelectedPlato] = useState("");
 
-    const listarHistorial = async () => {
+    const BASE_URL = "http://127.0.0.1:5000/api/registrotiempo/";
+
+    const apiPlato = async () => {
         try {
-            const response = await fetch(BASE_URL);
-            if (!response.ok) throw new Error("Error al obtener el historial");
+            const response = await fetch("http://127.0.0.1:5000/api/plato/");
+            if (!response.ok) {
+                throw new Error("Error al obtener los platos");
+            }
             const data = await response.json();
-            setHistorial(data);
+            setPlatos(data);
         } catch (error) {
-            console.error("Error al listar historial de horas:", error);
+            console.error("Error al consumir la API de platos:", error);
         }
     };
 
-    const buscarHorasFecha = async () => {
-        if (!fecha) return;
+    const verTop3 = async (id_plato) => {
         try {
-            const response = await fetch(`${BASE_URL}/filtrar_por_fecha?fecha=${fecha}`);
-            if (!response.ok) throw new Error("Error al buscar horas por fecha");
+            const response = await fetch(`${BASE_URL}top3/${id_plato}`);
+            if (!response.ok) throw new Error("Error al obtener el top 3 chefs más rápidos");
             const data = await response.json();
-            setHistorial(data);
+            setTop3(data);
+            setSelectedPlato(platos.find(plato => plato.id_plato === id_plato)?.nombre || "Plato seleccionado");
+            setModalVisible(true);
         } catch (error) {
-            console.error("Error al buscar historial de horas:", error);
+            console.error("Error al obtener el top 3:", error);
         }
+    };
+
+    const cerrarModal = () => {
+        setModalVisible(false);
+        setTop3([]);
     };
 
     useEffect(() => {
-        listarHistorial();
+        apiPlato();
     }, []);
 
     return (
         <div className="mainHistoHoras">
-            <Navbar/>
+            <Navbar />
             <div className="cabecera-historialHoras">
-                <h1> HORAS LABORADAS POR EMPLEADO </h1>
+                <h1>Top Chefs más rápidos</h1>
             </div>
             <div className="cuerpo-historial">
-                <div className="cuadro">
-                    <div className="busqueda-barra-horas">
-                        <input
-                            type="date"
-                            placeholder="Seleccionar fecha"
-                            value={fecha}
-                            onChange={(e) => setFecha(e.target.value)}
-                        />
-                        <button onClick={buscarHorasFecha}>Buscar</button>
-                        <button onClick={listarHistorial}>Listar Historial</button>
-                    </div>
-                    <table className="tabla-historial-horas">
-                        <thead className="tabla-encabezado">
-                            <tr>
-                                <th className="tabla-header">Fecha</th>
-                                <th className="tabla-header">Cédula</th>
-                                <th className="tabla-header">Nombres</th>
-                                <th className="tabla-header">Ingreso</th>
-                                <th className="tabla-header">Salida</th>
-                                <th className="tabla-header">Horas Laboradas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {historial.map((registro) => (
-                                <tr key={registro.id_registroHoras} className="tabla-fila">
-                                    <td>{registro.fecha}</td>
-                                    <td>{registro.cedula}</td>
-                                    <td>{registro.nombres}</td>
-                                    <td>{registro.horaIngreso}</td>
-                                    <td>{registro.horaSalida}</td>
-                                    <td>{registro.horasLaboradas}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="grid-menu-pedido">
+                    {platos.map((plato) => (
+                        <div
+                            className="card-plato"
+                            key={plato.id_plato}
+                            onClick={() => verTop3(plato.id_plato)}
+                        >
+                            <img
+                                src={plato.imagen || "https://via.placeholder.com/150"}
+                                alt={plato.nombre}
+                                className="imagen-plato"
+                            />
+                            <h3 className="nombre-plato">{plato.nombre}</h3>
+                        </div>
+                    ))}
                 </div>
             </div>
+
+            {/* Modal */}
+            {modalVisible && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h2>Top 3 Chefs más rápidos - {selectedPlato}</h2>
+                        <table className="tabla-top3">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Cédula</th>
+                                    <th>Tiempo Total</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {top3.map((chef, index) => (
+                                    <tr key={chef.id_registroTiempo}>
+                                        <td>{index + 1}</td>
+                                        <td>{chef.nombres}</td>
+                                        <td>{chef.cedula}</td>
+                                        <td>{chef.tiempoTotal}</td>
+                                        <td>{chef.fecha}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        <button className="cerrar-modal" onClick={cerrarModal}>
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

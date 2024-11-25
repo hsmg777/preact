@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 const RegistrarPlato = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [mensaje, setMensaje] = useState("");
+    const [loading, setLoading] = useState(false);
     const [newPlato, setNewPlato] = useState({
         descripcion: "",
         urlImg: "",
@@ -14,25 +15,21 @@ const RegistrarPlato = () => {
     });
     const history = useHistory();
     const USERS_URL = "http://127.0.0.1:5000/api/usuario";
-    const BASE_URL = "https://1b0a-181-198-15-238.ngrok-free.app/api/plato";
+    const BASE_URL = "http://127.0.0.1:5000/api/plato/";
 
-    // Función para listar usuarios administradores
     const listarUsuarios = async () => {
+        setLoading(true);
         try {
             const response = await fetch(USERS_URL);
             if (!response.ok) throw new Error("Error al listar usuarios");
-            const contentType = response.headers.get("content-type");
-
-            if (contentType && contentType.includes("application/json")) {
-                const data = await response.json();
-                const administradores = data.filter(user => user.isAdmin.trim() === "Y");
-                setUsuarios(administradores);
-            } else {
-                console.error("La respuesta no es JSON.");
-            }
+            const data = await response.json();
+            const administradores = data.filter(user => user.isAdmin.trim() === "Y");
+            setUsuarios(administradores);
         } catch (error) {
             console.error("Error al listar usuarios:", error);
-            setMensaje("Error al listar usuarios.");
+            alert("Error al listar usuarios.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -40,8 +37,22 @@ const RegistrarPlato = () => {
         listarUsuarios();
     }, []);
 
-    // Función para registrar el nuevo plato
+    const validarFormulario = () => {
+        if (!newPlato.nombre || !newPlato.precio || !newPlato.descripcion || !newPlato.id_User) {
+            alert("Por favor, completa todos los campos.");
+            return false;
+        }
+        if (newPlato.precio <= 0) {
+            alert("El precio debe ser mayor a 0.");
+            return false;
+        }
+        return true;
+    };
+
     const registrarPlato = async () => {
+        if (!validarFormulario()) return;
+
+        setLoading(true);
         try {
             const response = await fetch(BASE_URL, {
                 method: "POST",
@@ -49,24 +60,21 @@ const RegistrarPlato = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(newPlato),
-                mode: 'cors',
-                credentials: 'include', // Si usas cookies o autenticación basada en sesión
             });
             if (response.ok) {
-                setMensaje("Plato registrado con éxito.");
                 alert("Plato registrado con éxito.");
+                setNewPlato({ descripcion: "", urlImg: "", precio: 0, nombre: "", id_User: "" });
             } else {
-                setMensaje("Error al registrar el plato.");
+                alert("Error al registrar el plato.");
             }
         } catch (error) {
             console.error("Error al registrar plato:", error);
-            setMensaje("Error al registrar plato.");
+            alert("Error al registrar plato.");
+        } finally {
+            setLoading(false);
         }
     };
-    
-    
 
-    // Maneja la carga de la imagen y la convierte en Base64
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -78,11 +86,10 @@ const RegistrarPlato = () => {
         }
     };
 
-    // Función para volver a la página anterior
     const volver = () => {
         history.push({
-            pathname: "/gestionarPlatos",
-            state: { logged: true },
+            pathname: '/gestionarPlatos',
+            state: { logged: true }
         });
     };
 
@@ -120,9 +127,9 @@ const RegistrarPlato = () => {
                     ))}
                 </select>
                 <input type="file" accept="image/*" onChange={handleFileUpload} />
-                <button onClick={registrarPlato}>Registrar</button>
+                {loading ? <div className="spinner">Cargando...</div> : null}
+                <button onClick={registrarPlato} disabled={loading}>Registrar</button>
                 <button onClick={volver} className="close-button">Regresar</button>
-                {mensaje && <p>{mensaje}</p>}
             </div>
         </div>
     );
