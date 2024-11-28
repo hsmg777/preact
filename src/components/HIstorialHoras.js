@@ -8,11 +8,11 @@ const HistorialHoras = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPlato, setSelectedPlato] = useState("");
 
-    const BASE_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/registrotiempo/";
+    const BASE_URL = "http://127.0.0.1:5000/api/registrotiempo/";
 
     const apiPlato = async () => {
         try {
-            const response = await fetch("https://7e20-45-188-56-40.ngrok-free.app/api/plato/");
+            const response = await fetch("http://127.0.0.1:5000/api/plato/");
             if (!response.ok) {
                 throw new Error("Error al obtener los platos");
             }

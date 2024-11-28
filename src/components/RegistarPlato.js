@@ -14,8 +14,8 @@ const RegistrarPlato = () => {
         id_User: "",
     });
     const history = useHistory();
-    const USERS_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/usuario";
-    const BASE_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/plato/";
+    const USERS_URL = "http://127.0.0.1:5000/api/usuario";
+    const BASE_URL = "http://127.0.0.1:5000/api/plato/";
 
     const listarUsuarios = async () => {
         setLoading(true);

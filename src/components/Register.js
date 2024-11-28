@@ -14,7 +14,7 @@ const Register = () => {
     const history = useHistory();
 
     
-    const BASE_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/usuario";
+    const BASE_URL = "http://127.0.0.1:5000/api/usuario";
 
     const volver = async () => {
         history.push({
