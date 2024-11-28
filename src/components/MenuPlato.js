@@ -9,7 +9,7 @@ const MenuPlato = () => {
     const apiPlato = async () => {
         console.log(id_User);
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/plato/");
+            const response = await fetch("https://7e20-45-188-56-40.ngrok-free.app/api/plato/");
             if (!response.ok) {
                 throw new Error("Error al obtener los platos");
             }
@@ -37,7 +37,7 @@ const MenuPlato = () => {
         console.log(payload);
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/orden/", {
+            const response = await fetch("https://7e20-45-188-56-40.ngrok-free.app/api/orden/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

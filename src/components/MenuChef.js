@@ -8,9 +8,9 @@ const MenuChef = () => {
     const [detallesOrdenes, setDetallesOrdenes] = useState([]);
     const [registroHoras, setRegistroHoras] = useState({});
 
-    const BASE_URL_DETALLES = "http://127.0.0.1:5000/api/orden/detalles";
-    const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden/";
-    const BASE_URL_REGISTRO_HORAS = "http://127.0.0.1:5000/api/registrotiempo/";
+    const BASE_URL_DETALLES = "https://7e20-45-188-56-40.ngrok-free.app/api/orden/detalles";
+    const BASE_URL_ORDEN = "https://7e20-45-188-56-40.ngrok-free.app/api/orden/";
+    const BASE_URL_REGISTRO_HORAS = "https://7e20-45-188-56-40.ngrok-free.app/api/registrotiempo/";
 
     useEffect(() => {
         if (!id_User) {

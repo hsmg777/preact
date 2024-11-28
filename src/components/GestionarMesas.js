@@ -9,7 +9,7 @@ const GestionarMesas = () => {
     const [editandoId, setEditandoId] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const BASE_URL = "http://127.0.0.1:5000/api/mesa";
+    const BASE_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/mesa";
 
     const listarMesas = async () => {
         setLoading(true);

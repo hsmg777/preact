@@ -9,7 +9,7 @@ const GestionarPlatos = () => {
     const [mensaje, setMensaje] = useState("");
     const history = useHistory();
 
-    const BASE_URL = "http://127.0.0.1:5000/api/plato";
+    const BASE_URL = "https://7e20-45-188-56-40.ngrok-free.app/api/plato";
 
     // Función para listar platos
     const listarPlatos = async () => {
@@ -187,7 +187,7 @@ const GestionarPlatos = () => {
                                                 plato.urlImg && plato.urlImg.startsWith("http")
                                                     ? plato.urlImg
                                                     : plato.urlImg
-                                                    ? `http://127.0.0.1:5000${plato.urlImg}`
+                                                    ? `https://7e20-45-188-56-40.ngrok-free.app${plato.urlImg}`
                                                     : "https://via.placeholder.com/50" // URL de imagen de respaldo si urlImg está vacío o no es válida
                                             }
                                             alt="Plato"

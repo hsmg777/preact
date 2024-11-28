@@ -7,7 +7,7 @@ const HistorialOrdenes = () => {
 
     const listarOrdenes = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/orden/detalles");
+            const response = await fetch("https://7e20-45-188-56-40.ngrok-free.app/api/orden/detalles");
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
