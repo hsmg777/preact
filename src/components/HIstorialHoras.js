@@ -8,11 +8,11 @@ const HistorialHoras = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPlato, setSelectedPlato] = useState("");
 
-    const BASE_URL = "http://127.0.0.1:5000/api/registrotiempo/";
+    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/registrotiempo/";
 
     const apiPlato = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/plato/");
+            const response = await fetch("http://api-flask-container.eastus2.azurecontainer.io:5000/api/plato/");
             if (!response.ok) {
                 throw new Error("Error al obtener los platos");
             }

@@ -9,7 +9,7 @@ const MenuPlato = () => {
     const apiPlato = async () => {
         console.log(id_User);
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/plato/");
+            const response = await fetch("http://api-flask-container.eastus2.azurecontainer.io:5000/api/plato/");
             if (!response.ok) {
                 throw new Error("Error al obtener los platos");
             }
@@ -37,7 +37,7 @@ const MenuPlato = () => {
         console.log(payload);
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/api/orden/", {
+            const response = await fetch("http://api-flask-container.eastus2.azurecontainer.io:5000/api/orden/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
