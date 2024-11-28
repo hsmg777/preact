@@ -9,7 +9,7 @@ const GestionarMesas = () => {
     const [editandoId, setEditandoId] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const BASE_URL = "http://127.0.0.1:5000/api/mesa";
+    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/mesa";
 
     const listarMesas = async () => {
         setLoading(true);
