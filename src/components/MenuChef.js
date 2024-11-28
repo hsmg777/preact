@@ -8,9 +8,9 @@ const MenuChef = () => {
     const [detallesOrdenes, setDetallesOrdenes] = useState([]);
     const [registroHoras, setRegistroHoras] = useState({});
 
-    const BASE_URL_DETALLES = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/orden/detalles";
-    const BASE_URL_ORDEN = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/orden/";
-    const BASE_URL_REGISTRO_HORAS = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/registrotiempo/";
+    const BASE_URL_DETALLES = "http://127.0.0.1:5000/api/orden/detalles";
+    const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden/";
+    const BASE_URL_REGISTRO_HORAS = "http://127.0.0.1:5000/api/registrotiempo/";
 
     useEffect(() => {
         if (!id_User) {

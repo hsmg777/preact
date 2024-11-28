@@ -7,7 +7,7 @@ const HistorialOrdenes = () => {
 
     const listarOrdenes = async () => {
         try {
-            const response = await fetch("http://api-flask-container.eastus2.azurecontainer.io:5000/api/orden/detalles");
+            const response = await fetch("http://127.0.0.1:5000/api/orden/detalles");
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }

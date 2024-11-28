@@ -9,7 +9,7 @@ const GestionarPlatos = () => {
     const [mensaje, setMensaje] = useState("");
     const history = useHistory();
 
-    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/plato";
+    const BASE_URL = "http://127.0.0.1:5000/api/plato";
 
     // Función para listar platos
     const listarPlatos = async () => {

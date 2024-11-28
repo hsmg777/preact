@@ -9,7 +9,7 @@ const Menu = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/usuario";
+    const BASE_URL = "http://127.0.0.1:5000/api/usuario";
 
     const listarUsuarios = async () => {
         setLoading(true);

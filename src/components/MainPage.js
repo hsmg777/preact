@@ -9,8 +9,8 @@ const MainPage = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/usuario";
-    const URL_MESA = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/mesa/validate";
+    const BASE_URL = "http://127.0.0.1:5000/api/usuario";
+    const URL_MESA = "http://127.0.0.1:5000/api/mesa/validate";
 
     const handleLogin = async (e) => {
         e.preventDefault();

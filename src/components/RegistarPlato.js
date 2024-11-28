@@ -14,8 +14,8 @@ const RegistrarPlato = () => {
         id_User: "",
     });
     const history = useHistory();
-    const USERS_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/usuario";
-    const BASE_URL = "http://api-flask-container.eastus2.azurecontainer.io:5000/api/plato/";
+    const USERS_URL = "http://127.0.0.1:5000/api/usuario";
+    const BASE_URL = "http://127.0.0.1:5000/api/plato/";
 
     const listarUsuarios = async () => {
         setLoading(true);
