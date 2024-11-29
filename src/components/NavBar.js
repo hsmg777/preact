@@ -42,6 +42,13 @@ const Navbar = ({ logged }) => {
         state: { logged: true}
       });
   };
+  const handleCore= () => {
+    history.push({
+        pathname: '/corefechas',
+        state: { logged: true}
+      });
+  };
+  
   
   
 
@@ -58,6 +65,9 @@ const Navbar = ({ logged }) => {
       </button>
       <button onClick={() => handleHoras("/historialHoras")} className={location.pathname === '/historialHoras' ? 'active' : ''}>
         Top 3 chefs mas rapidos
+      </button>
+      <button onClick={() => handleCore("/corefechas")} className={location.pathname === '/corefechas' ? 'active' : ''}>
+        Consulta chef por fechas 
       </button>
       <button onClick={() => handlePlatos("/gestionarPlatos")} className={location.pathname === '/gestionarPlatos' ? 'active' : ''}>
         Gestionar platos
