@@ -11,7 +11,10 @@ el cual se conecta con el link de ngrok "https://1b0a-181-198-15-238.ngrok-free.
 
 ESTA aplicación fue diseñada para ayudar a una mejor gestión de el pedido de platos de un menú de un restaurante asi como mejorar la experiencia del usuario al ir a un restaurante.
  
-POR EL MOMENTO LA APP esta en desarrollo tiene en funcionamiento la parte de el ADMINISTRADOR Y TODO LO QUE EL PUEDE REALIZAR (Gestionar usuarios, Gestionar Mesas, Historial de ordenes, Historial de horas laboradas por los empleados y gestión de platos del menú)
+El front end esta completo y tiene funcionamiento de la parte de el ADMINISTRADOR, CHEFS Y MESAS 
+ADMINISTRADOR: puede (Gestionar usuarios, Gestionar Mesas, ver Tiempo que se demoraron los chef por plato, historial de ordenes, filtrar por fechas y ver cual es el chef mas rapido en ese tiempo, ver las ordenes mas lentas en un rango de tiempo y gestión de platos del menú)
+MESAS: Realizar pedidos (ordenes) de lo que deseen comer
+CHEFS: Pueden ver las ordenes que tienen pendientes y registrar el tiempo de manera automatica que se han demorado haciendo las mismas mediante 2 botones (empezar y terminar) 
 
 Para su funcionamiento tendrás que: 
  En el código de la API:
