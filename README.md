@@ -3,7 +3,7 @@ CORE Restaurante (React + Flask + Ngrok)
 Este proyceto "MVC Restaurante" fue desadesarrollado de la siguiente manera:
 FRONT END -> REACT
 API MVC -> FLASK
-BASE DE DATOS -> SQL SERVER MANAGMENT
+BASE DE DATOS -> SQL (En azure)
 
 En este mini core el frontend fue deployado en vercel con el siguiente URL: 
 https://preact-mauve.vercel.app
