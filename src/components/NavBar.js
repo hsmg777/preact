@@ -48,6 +48,12 @@ const Navbar = ({ logged }) => {
         state: { logged: true}
       });
   };
+  const handleLentos= () => {
+    history.push({
+        pathname: '/lentos',
+        state: { logged: true}
+      });
+  };
   
   
   
@@ -71,6 +77,9 @@ const Navbar = ({ logged }) => {
       </button>
       <button onClick={() => handlePlatos("/gestionarPlatos")} className={location.pathname === '/gestionarPlatos' ? 'active' : ''}>
         Gestionar platos
+      </button>
+      <button onClick={() => handleLentos("/lentos")} className={location.pathname === '/lentos' ? 'active' : ''}>
+        Ord mas lentas
       </button>
       <button onClick={() => handleSalir("/salir")} className={location.pathname === '/salir' ? 'active' : ''}>
         Salir

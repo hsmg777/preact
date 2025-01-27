@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom'; 
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'; 
 import './styles/Register.css';
 
 const Register = () => {
@@ -11,10 +11,26 @@ const Register = () => {
     const [telefono, setTelefono] = useState('');
     const [isAdminis, setAdmin] = useState('');
     const [mensaje, setMensaje] = useState('');
+    const [usuarios, setUsuarios] = useState([]); 
     const history = useHistory();
 
-    
     const BASE_URL = "http://127.0.0.1:5000/api/usuario";
+
+    useEffect(() => {
+        const listarUsuarios = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/`);
+                if (!response.ok) throw new Error("Error al listar usuarios.");
+                const data = await response.json();
+                setUsuarios(data);
+                console.log(data);
+            } catch (error) {
+                alert("Error al listar usuarios.");
+            } 
+        };
+
+        listarUsuarios();
+    }, []);
 
     const volver = async () => {
         history.push({
@@ -24,16 +40,24 @@ const Register = () => {
     };
 
     const handleRegister = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
+
+        // Validar si la cédula ya existe
+        const cedulaExiste = usuarios.some(usuario => parseInt(usuario.Cedula) === parseInt(cedula));
+
+        if (cedulaExiste) {
+            setMensaje('La cédula ya existe, no se puede registrar el usuario');
+            return;
+        }
 
         const nuevoUsuario = {
-            Username: username,
-            Contrasenia: contrasenia,
-            Nombre: nombre,
-            Apellido: apellido,
-            Cedula: cedula,
-            Telefono: telefono,
-            isAdmin: isAdminis
+            Username: username.trim(),
+            Contrasenia: contrasenia.trim(),
+            Nombre: nombre.trim(),
+            Apellido: apellido.trim(),
+            Cedula: parseInt(cedula.trim()), 
+            Telefono: telefono.trim(),
+            isAdmin: isAdminis.trim()
         };
 
         try {
@@ -54,6 +78,7 @@ const Register = () => {
             }
         } catch (error) {
             setMensaje('Hubo un error al comunicarse con el servidor');
+            console.error('Error:', error);
         }
     };
 
