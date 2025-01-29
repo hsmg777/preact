@@ -5,7 +5,7 @@
   flex-direction: column; /* Para alinear en columna */
   justify-content: flex-start; /* Coloca el contenido al inicio, en la parte superior */
   align-items: center; /* Centra horizontalmente */
-  background-image: url('/public/back.png');
+  background-color: rgb(1, 16, 62);  
   background-size: cover; /* Cubrir todo el contenedor */
   background-position: center; /* Centrar la imagen */
   text-align: center;
@@ -24,13 +24,13 @@
   margin-top: 30px; /* Añade espacio entre el encabezado y la tarjeta */
 }
 .cuerpo h2{
-  color: rgb(125, 6, 85);
+  color: rgb(0, 81, 255);
 }
 .cuerpo h4{
-  color: rgb(201, 11, 138);
+  color: rgb(38, 104, 248);
 }
 .cuerpo p{
-  color: rgb(103, 13, 214);
+  color: rgb(38, 104, 248);
 }
 
 .form {
@@ -55,7 +55,7 @@
 }
 
 .form a {
-  color: rgb(103, 13, 214);
+  color: rgb(0, 81, 255);
   text-decoration: none;
 }
 
@@ -64,9 +64,9 @@
 }
 
 .reservar-button {
-  border: 1px solid rgb(44, 0, 106);
+  border: 1px solid rgb(0, 81, 255);
   background-color: transparent;
-  color:rgb(92, 27, 183);
+  color:rgb(0, 81, 255);
   font-size: 12px;
   padding: 8px 16px;
   cursor: pointer;
@@ -76,6 +76,6 @@
 }
 
 .reservar-button:hover {
-  background-color: rgb(92, 27, 183);
+  background-color: rgb(38, 104, 248);
   color: white;
 }

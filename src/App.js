@@ -13,7 +13,7 @@ import MenuChef from './components/MenuChef';
 import MenuPlato from './components/MenuPlato';
 import CoreFechas from './components/CoreFechas';
 import Lentos from './components/Lentos';
-import { PrivateRoute } from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
