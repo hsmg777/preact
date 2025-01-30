@@ -1,12 +1,19 @@
+// MenuChef.js
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import './styles/MenuChef.css';
+import io from 'socket.io-client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const SOCKET_SERVER_URL = "http://127.0.0.1:5000";  // Asegúrate de que coincida con la URL de tu backend
 
 const MenuChef = () => {
     const { id_User } = useParams();
     const [ordenes, setOrdenes] = useState([]);
     const [detallesOrdenes, setDetallesOrdenes] = useState([]);
     const [registroHoras, setRegistroHoras] = useState({});
+    const [notifications, setNotifications] = useState([]);
 
     const BASE_URL_DETALLES = "http://127.0.0.1:5000/api/orden/detalles";
     const BASE_URL_ORDEN = "http://127.0.0.1:5000/api/orden/";
@@ -19,6 +26,34 @@ const MenuChef = () => {
             cargarDatos();
         }
     }, [id_User]);
+
+    useEffect(() => {
+        // Conectar a SocketIO en el namespace '/chef_notifications'
+        const socket = io(`${SOCKET_SERVER_URL}/chef_notifications`, {
+            transports: ['websocket'],
+        });
+
+        socket.on('connect', () => {
+            console.log('Conectado a SocketIO en /chef_notifications');
+        });
+
+        // Escuchar el evento 'new_order'
+        socket.on('new_order', (data) => {
+            console.log('Nueva orden recibida:', data);
+            setNotifications((prev) => [...prev, data]);
+            // Mostrar una notificación visual usando react-toastify
+            toast.info(`¡Nueva Orden! ID: ${data.id_orden}, Plato: ${data.plato_nombre}, Cantidad: ${data.cantidad}`);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Desconectado de SocketIO en /chef_notifications');
+        });
+
+        // Limpiar la conexión al desmontar el componente
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     const cargarDatos = async () => {
         try {
@@ -36,7 +71,7 @@ const MenuChef = () => {
 
             setDetallesOrdenes(dataDetalles);
             setOrdenes(dataOrdenes);
-            console.log(detallesOrdenes);
+            console.log(dataDetalles);
         } catch (error) {
             console.error("Error al cargar datos:", error);
         }
@@ -47,7 +82,7 @@ const MenuChef = () => {
         const tiempoInicio = now.toTimeString().split(" ")[0];
         const fecha = now.toISOString().split("T")[0];
 
-        // Buscar `id_plato` desde la lista de órdenes
+        // Buscar id_plato desde la lista de órdenes
         const ordenCompleta = ordenes.find((o) => o.id_orden === orden.id_orden);
         if (!ordenCompleta || !ordenCompleta.id_plato) {
             alert("No se encontró el plato asociado a esta orden.");
@@ -89,13 +124,13 @@ const MenuChef = () => {
     const registrarFin = async (orden) => {
         const now = new Date();
         const tiempoFin = now.toTimeString().split(" ")[0]; // Hora actual
-    
+
         const registroId = registroHoras[orden.id_orden]; // Recuperar el id_registroHoras asociado
         if (!registroId) {
             alert("Debes registrar el inicio antes de registrar el fin.");
             return;
         }
-    
+
         try {
             // Obtener el registro actual de la API
             const responseGet = await fetch(`${BASE_URL_REGISTRO_HORAS}${registroId}`);
@@ -104,21 +139,25 @@ const MenuChef = () => {
                 return;
             }
             const registroActual = await responseGet.json();
-    
+
             // Calcular tiempo total
             const tiempoInicio = registroActual.tiempoInicio;
             const [horaInicioH, horaInicioM, horaInicioS] = tiempoInicio.split(":").map(Number);
             const [horaFinH, horaFinM, horaFinS] = tiempoFin.split(":").map(Number);
-    
+
             const tiempoInicioDate = new Date();
             tiempoInicioDate.setHours(horaInicioH, horaInicioM, horaInicioS);
-    
+
             const tiempoFinDate = new Date();
             tiempoFinDate.setHours(horaFinH, horaFinM, horaFinS);
-    
-            const diferenciaMs = tiempoFinDate - tiempoInicioDate; // Diferencia en milisegundos
+
+            let diferenciaMs = tiempoFinDate - tiempoInicioDate;
+            if (diferenciaMs < 0) {
+                // Manejar el caso en que el tiempo de fin es al día siguiente
+                diferenciaMs += 24 * 60 * 60 * 1000;
+            }
             const tiempoTotal = new Date(diferenciaMs).toISOString().slice(11, 19); // Formato HH:MM:SS
-    
+
             // JSON para actualizar el registro de tiempo
             const payloadRegistroTiempo = {
                 id_User: registroActual.id_User,
@@ -128,9 +167,9 @@ const MenuChef = () => {
                 tiempoFin: tiempoFin,
                 tiempoTotal: tiempoTotal,
             };
-    
+
             console.log("Payload enviado a /api/registrotiempo:", payloadRegistroTiempo);
-    
+
             // Realizar el PUT para actualizar el registro de tiempo
             const responsePutRegistro = await fetch(`${BASE_URL_REGISTRO_HORAS}${registroId}`, {
                 method: "PUT",
@@ -139,19 +178,19 @@ const MenuChef = () => {
                 },
                 body: JSON.stringify(payloadRegistroTiempo),
             });
-    
+
             if (responsePutRegistro.ok) {
                 // JSON para actualizar el estado de la orden
                 const payloadOrden = {
                     estado: "Completo",
                     observacion: orden.Observacion || "Sin observación",
-                    id_mesa: orden.id_mesa, 
-                    cantidad: orden.Cantidad, 
-                    id_plato: orden.id_plato || registroActual.id_plato, 
+                    id_mesa: orden.id_mesa,
+                    cantidad: orden.Cantidad,
+                    id_plato: orden.id_plato || registroActual.id_plato,
                 };
-    
+
                 console.log("Payload enviado a /api/orden:", payloadOrden);
-    
+
                 // Realizar el PUT para cambiar el estado de la orden
                 const responsePutOrden = await fetch(`${BASE_URL_ORDEN}${orden.id_orden}`, {
                     method: "PUT",
@@ -160,7 +199,7 @@ const MenuChef = () => {
                     },
                     body: JSON.stringify(payloadOrden),
                 });
-    
+
                 if (responsePutOrden.ok) {
                     alert(`Orden ${orden.id_orden} completada con éxito.`);
                     cargarDatos(); // Actualizar la lista de datos
@@ -179,11 +218,20 @@ const MenuChef = () => {
             alert("Error al registrar el fin.");
         }
     };
-    
-    
-    
+
     return (
         <div className="main-menu-chef">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="cabecera-menu-chef">
                 <h1>Bienvenido, Usuario {id_User}</h1>
             </div>
@@ -193,14 +241,14 @@ const MenuChef = () => {
                     <table className="tabla-pedidos-chef">
                         <thead>
                             <tr>
-                                <td>ID</td>
-                                <td>idMesa</td>
-                                <td>Mesa</td>
-                                <td>Plato</td>
-                                <td>Cantidad</td>
-                                <td>Observación</td>
-                                <td>Estado</td>
-                                <td>Acciones</td>
+                                <th>ID</th>
+                                <th>ID Mesa</th>
+                                <th>Mesa</th>
+                                <th>Plato</th>
+                                <th>Cantidad</th>
+                                <th>Observación</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -227,6 +275,7 @@ const MenuChef = () => {
             </div>
         </div>
     );
+
 };
 
 export default MenuChef;
